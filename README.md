@@ -5,8 +5,33 @@ We are going to see how set up a private Ethereum network with 3 nodes.
 The steps :
 1. Install Geth (Ethereum client)
 2. Create directories for all nodes' data
+3. Create an Ethereum account for each node
+4. Init each node with the same *genesis* data and provide initial crypto to our account
+5. Start a node and check it
+6. Connect our 3 nodes together
+7. Send our first transactions
 
-## 1) Install Ethereum (Geth client)
+## Scripts
+
+Some scripts and files are provided for all of it. Running them in the right order will create the network in a directory named `ethereum` at the root of the project directory. To start the project from scratch, juste remove this directory.
+
+- Step 1: `1-install-geth.sh`
+
+- Steps 2 & 3: `2-init-private-network.sh`
+
+- Step 4: `3-update-genesis.txt` (manual operation as described in the file) and `4-init-nodes.sh`
+
+- Step 5: `run-nodeX.sh`
+
+- Step 6 and 7: manual commands as described bellow.
+
+- `genesis.json` provides a template of genesis file that will be copied for each node, to be manually updated.
+
+Or just follow instructions bellow.
+
+--------
+
+## 1) Install Ethereum (Geth client) (`1-install-geth.sh`)
 
 ```sh
 # Install geth from repository
@@ -17,7 +42,7 @@ sudo apt-get update
 sudo apt-get install ethereum
 ```
 
-## 2) Create private Ethereum network
+## 2) Create private Ethereum network (`2-init-private-network.sh`)
 
 See official documentation: 
 
@@ -64,7 +89,7 @@ cp genesis.json ethereum/genesis-node2.json
 cp genesis.json ethereum/genesis-node3.json
 ```
 
-### b. Update genesis with new accounts
+### b. Update genesis with new accounts (`3-update-genesis.txt`)
 
 Blockchain is composed of blocks that are strongly linked to each other. Any block is linked to the previous one thanks to hashing. The only block that does not follow that rule is, of course, the first block, called **genesis block**.
 
@@ -110,7 +135,7 @@ Example: we have create the account "0x849fC9517B8B35710357a90C4e2f57522F0D5485"
 }
 ```
 
-### c. Initialize nodes with their genesis
+### c. Initialize nodes with their genesis (`4-init-nodes.sh`)
 
 ```sh
 #!/bin/bash
@@ -123,7 +148,7 @@ geth init ethereum/genesis-node2.json --datadir="ethereum/ethereum-nodes/node2"
 geth init ethereum/genesis-node3.json --datadir="ethereum/ethereum-nodes/node3"
 ```
 
-### d. Start the nodes
+### d. Start the nodes (`run-nodeX.sh`)
 
 Now we can use `geth` to run the 3 nodes.
 
