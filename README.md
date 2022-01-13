@@ -1,6 +1,6 @@
 # Ethereum getting started
 
-We are going to see how set up a private Ethereum network with 3 nodes.
+We are going to see how set up a private Ethereum network with 3 nodes. We will learn how to manage an Ethereum node and deal with Ether (ETH), the Ethereum cryptocurrency.
 
 The steps :
 1. Install Geth (Ethereum client)
@@ -54,7 +54,11 @@ https://geth.ethereum.org/docs/interface/private-network
 
 ### a. Initialize the private network
 
-We are going to create a private network with 3 nodes. The previously create genesis file will be the common genesis for all 3 nodes to start building a blockchain.
+We are going to create a private network with 3 nodes. First, we will create directories for nodes' data. Then we will create an account for each node.
+
+The genesis template file will be copied in each nodes directories.
+
+Have a look at you console, you'll be prompt to set password for all accounts. Keep these password in memory !
 
 ```sh
 #!/bin/bash
@@ -96,7 +100,7 @@ Blockchain is composed of blocks that are strongly linked to each other. Any blo
 Our private network will start from a genesis block. We can define it in the `genesis.json` file.
 
 We find a `genesis.json` file for each node. There is a common part, to set the same configuration for all of them. 
-But each node will also start with an account provided with initial Ethers. We created these account in previous step. We can now set their initial balance in each genesis file.
+But each node will also start with an account provided with initial Ethers (ETH). We created these account in previous step. We can now set their initial balance in each genesis file.
 
 Update all `ethereum/genesis-nodeX.json` with the given Ethereum account address provided by previous step.
 
@@ -174,7 +178,7 @@ console
 - `networkid` is the id of network to connect to
 - `port` is the running port for Geth process
 - `http.port` is the RPC port, to be used by development tools to communicate with blockchain
-- `console` starts a console to manage the node
+- `console` starts a console to manage the node (should always be the last parameter)
 
 All options are described here: https://geth.ethereum.org/docs/interface/command-line-options
 
@@ -230,4 +234,113 @@ That's it, the 2 other nodes are connected to the first one. Repeat the operatio
 
 ## 3) Use our network
 
-We can now use our network.
+### a. We need a miner
+
+We can now use our network. First, we need to have a miner. Everything that will happen on the network will create transactions. We need a miner to validate the transactions and make their result to be applied.
+
+We can have 1 or more miner, your call.
+
+On the miner node's console:
+```javascript
+miner.start()
+```
+
+You will see the mining activity starting on logs. Buy the way, mining a block brings a reward to the miner.
+
+We don't precise what is the account that will be used as miner account. By default, it will be the first created account.
+
+This account's balance will then increase at every new mined block thanks to the mining rewards.
+
+You can find the mining account with:
+
+```javascript
+eth.coinbase
+```
+
+And follow its enrichment:
+```javascript
+web3.fromWei(eth.getBalance(eth.coinbase))
+```
+> Miner will be mining new blocks continuously. When there are no transactions to validate, the blocks will be empty.
+
+### b. Create a new account
+
+We will create a second account:
+```javascript
+personal.newAccount()
+```
+We are prompted for the password, then the new account's address appears !
+
+```javascript
+> eth.accounts
+["0x849fc9517b8b35710357a90c4e2f57522f0d5485", "0x5957cf50f748af5ef68bc777af8833ba5ab2a29b"]
+```
+Our 2 accounts are displayed.
+
+### c. Send a transaction
+
+We can now send 1 Ether from our first to our second account.
+
+```javascript
+eth.sendTransaction(
+{
+    from: '0x849fc9517b8b35710357a90c4e2f57522f0d5485',
+    to: '0x5957cf50f748af5ef68bc777af8833ba5ab2a29b',
+    value: '1000000000000000000'
+});
+```
+
+Oh ! An error occured, asking us to unlock our account. Any new account has to be unlocked before being used to send transaction.
+
+```javascript
+personal.unlockAccount("0x849fc9517b8b35710357a90c4e2f57522f0d5485", "toto", 0)
+```
+2 possibilities for this call:
+- Provide only account address as parameter. You will be prompted for the password, and the account will be unlocked for 300 seconds.
+- Provide account address, password and duration (in seconds). The account will be unlocked for the given duration (set 0 for a permanent unlock).
+
+Then it's unlocked. So we can try to send our transaction again.
+
+As result, we get an hexadecimal string that is the **transaction hash**. (The identifier of the transaction). We can have a look on the transaction: 
+
+```javascript
+> eth.getTransaction("0x2c96b84caae5f822a05cc5e319c57bd29266bc1ebf3a31c706e9f9963df38529")
+
+{
+  blockHash: "0x3f5565a49c1b40654015925eb22c375769c2152fd443956f279cb89f11ead225",
+  blockNumber: 22,
+  from: "0x849fc9517b8b35710357a90c4e2f57522f0d5485",
+  gas: 21000,
+  gasPrice: 1000000000,
+  hash: "0x2c96b84caae5f822a05cc5e319c57bd29266bc1ebf3a31c706e9f9963df38529",
+  input: "0x",
+  nonce: 0,
+  r: "0x9e9f7773f681a0026d328cbd92e6cbddfadacdbfc3ca009625c1dd7e8d2e7eb0",
+  s: "0xe4aacb70c0321d2495d197e8d9a20592175afcb6f059e1ed897425fbf09d164",
+  to: "0x5957cf50f748af5ef68bc777af8833ba5ab2a29b",
+  transactionIndex: 0,
+  type: "0x0",
+  v: "0x41",
+  value: 1000000000000000000
+}
+```
+
+We have the detail of the transaction. If fields `blockHash` and `blockNumber` are undefined, it means that it has not been validated (mined) yet. Else, we can conclude that transaction was validated and applied. 
+
+**All nodes on the network should be able to see this transaction.**
+
+New check the new balances:
+
+```javascript
+> web3.fromWei(eth.getBalance("0x5957cf50f748af5ef68bc777af8833ba5ab2a29b"))
+1
+```
+
+```javascript
+> web3.fromWei(eth.getBalance("0x849fc9517b8b35710357a90c4e2f57522f0d5485"))
+1
+```
+
+Note that if an account has 100 ETH and sends 1 ETH to another account. The balance of the first account will not be 99 ETH, but something like 98.9999 ETH
+
+This is because any transaction should pay some transaction fees. The sender pay it. So, sending 1 ETH will cost you a little more than 1 ETH.
