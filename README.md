@@ -301,7 +301,19 @@ personal.unlockAccount("0x849fc9517b8b35710357a90c4e2f57522f0d5485", "toto", 0)
 
 Then it's unlocked. So we can try to send our transaction again.
 
-As result, we get an hexadecimal string that is the **transaction hash**. (The identifier of the transaction). We can have a look on the transaction: 
+```javascript
+> eth.sendTransaction(
+{
+    from: '0x849fc9517b8b35710357a90c4e2f57522f0d5485',
+    to: '0x5957cf50f748af5ef68bc777af8833ba5ab2a29b',
+    value: '1000000000000000000'
+});
+
+0x2c96b84caae5f822a05cc5e319c57bd29266bc1ebf3a31c706e9f9963df38529
+```
+
+As result, we get an hexadecimal string that is the **transaction hash** (the identifier of the transaction). We can have a look on it: 
+
 
 ```javascript
 > eth.getTransaction("0x2c96b84caae5f822a05cc5e319c57bd29266bc1ebf3a31c706e9f9963df38529")
@@ -327,7 +339,15 @@ As result, we get an hexadecimal string that is the **transaction hash**. (The i
 
 We have the detail of the transaction. If fields `blockHash` and `blockNumber` are undefined, it means that it has not been validated (mined) yet. Else, we can conclude that transaction was validated and applied. 
 
-**All nodes on the network should be able to see this transaction.**
+> When a user sends a transaction, it's sent to the whole network. So anyone can see it.
+>
+> Miners are competiting to create the next block. To do it, a miner selects some of the pending transactions, gather them in a block and try to create a block hash corresponding to the Proof of Work problem.
+>
+> When a block that respects PoW conditions has been created, the miner sends it to the network. All miners that were also working on the same block (block with the same number in the blockchain) stop their work and strart trying to mine the next block with other pendings transactions.
+>
+> All transactions that were included in the mined block are considerer as validated so their result is applied on every netwok nodes. For exemple, a transaction sending 2 ETH from A to B is in a block that a node received, it will automatically applied on his personal copy of the blockchain the new balances for A and B.
+
+**All nodes on the network should now be able to see this transaction.**
 
 New check the new balances:
 
@@ -338,9 +358,9 @@ New check the new balances:
 
 ```javascript
 > web3.fromWei(eth.getBalance("0x849fc9517b8b35710357a90c4e2f57522f0d5485"))
-1
+98.9999
 ```
 
 Note that if an account has 100 ETH and sends 1 ETH to another account. The balance of the first account will not be 99 ETH, but something like 98.9999 ETH
 
-This is because any transaction should pay some transaction fees. The sender pay it. So, sending 1 ETH will cost you a little more than 1 ETH.
+This is because any transaction should pay some transaction fees to the miner that will validate it in a block. The sender pays it. So, sending 1 ETH will cost you a little more than 1 ETH.
