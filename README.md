@@ -232,6 +232,8 @@ admin.addPeer("enode://a725d853939231bc8c6befc959b634eefde0ba5e8bf7aa20c451bb4fe
 ```
 That's it, the 2 other nodes are connected to the first one. Repeat the operation to create all connections you need.
 
+To check that nodes are connected together, we can simply try to check the balance of the account initialized in the genesis of another node.
+
 ## 3) Use our network
 
 ### a. We need a miner
