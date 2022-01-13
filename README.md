@@ -366,3 +366,17 @@ New check the new balances:
 Note that if an account has 100 ETH and sends 1 ETH to another account. The balance of the first account will not be 99 ETH, but something like 98.9999 ETH
 
 This is because any transaction should pay some transaction fees to the miner that will validate it in a block. The sender pays it. So, sending 1 ETH will cost you a little more than 1 ETH.
+
+The transactions fees are the **gas**. Any instruction to be executed in a transaction has a price expressed in gas. The cost of transaction is the sum of all instructions price.
+And the sender can set a **gasPrice** to tel how much he can accept to pay for each gas unit.
+
+As we can see on the previous transaction:
+```javascript
+  gas: 21000,
+  gasPrice: 1000000000,
+```
+
+It means that our transaction costs 21000 gas and we accept to pay 1000000000 wei for 1 gas. So, the price of our transaction is 21000 * 1000000000 = 21000000000000 wei (0,000021 ETH).
+
+When a transaction is mined in a block, the miner can keep the transactions fees as a reward for his work.
+
