@@ -96,7 +96,7 @@ Blockchain is composed of blocks that are strongly linked to each other. Any blo
 Our private network will start from a genesis block. We can define it in the `genesis.json` file.
 
 We find a `genesis.json` file for each node. There is a common part, to set the same configuration for all of them. 
-But each node will also start with an account provided with initial Ethers (ETH). We created these account in previous step. We can now set their initial balance in each genesis file.
+But each node will also start with an account provided with initial Ethers (ETH). We created these account in previous step. We can now set their initial balance in the genesis file.
 
 Update ethereum/genesis.json with the given Ethereum accounts address provided by previous step.
 
@@ -139,11 +139,11 @@ Example: we have create 3 accounts and we want to initialize its balance with 10
 #!/bin/bash
 
 # Init each node with genesis block file
-geth init genesis-node1.json --datadir="ethereum/ethereum-nodes/node1"
+geth init genesis.json --datadir="ethereum/ethereum-nodes/node1"
 
-geth init genesis-node2.json --datadir="ethereum/ethereum-nodes/node2"
+geth init genesis.json --datadir="ethereum/ethereum-nodes/node2"
 
-geth init genesis-node3.json --datadir="ethereum/ethereum-nodes/node3"
+geth init genesis.json --datadir="ethereum/ethereum-nodes/node3"
 ```
 
 ### d. Start the nodes (`run-nodeX.sh`)
