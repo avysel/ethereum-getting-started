@@ -87,10 +87,6 @@ geth --datadir="ethereum/ethereum-nodes/node3" account new
 # A file will be created in ethereum/ethereum-nodes/nodeX/keystore with account's address.
 # Use this address in genesis.json file to init each node with it's first account ("alloc" field of genesis.json) and provide it initial ethers
 
-# Init genesis file for all nodes
-cp genesis.json ethereum/genesis-node1.json
-cp genesis.json ethereum/genesis-node2.json
-cp genesis.json ethereum/genesis-node3.json
 ```
 
 ### b. Update genesis with new accounts (`3-update-genesis.txt`)
@@ -102,22 +98,18 @@ Our private network will start from a genesis block. We can define it in the `ge
 We find a `genesis.json` file for each node. There is a common part, to set the same configuration for all of them. 
 But each node will also start with an account provided with initial Ethers (ETH). We created these account in previous step. We can now set their initial balance in each genesis file.
 
-Update all `ethereum/genesis-nodeX.json` with the given Ethereum account address provided by previous step.
+Update ethereum/genesis.json with the given Ethereum accounts address provided by previous step.
 
-1 - Go to `ethereum-nodes/nodeX/keystore`
+1 - Go to ethereum-nodes/nodeX/keystore
+2 - Open the file named "UTC-....."
+3 - Copy the value of 'address' field
+4 - Paste it in 'alloc' section of genesis.json, and provide it initial balance.
 
-2 - Open the file named `UTC-.....`
+The initial Ether value is provided in Wei. 
 
-3 - Copy the value of `address` field
+1 Ether = 1 000 000 000 Gwei (10⁹ Gwei) = 1 000 000 000 000 000 000 Wei (10¹⁸ Wei)
 
-4 - Paste it in `alloc` section of `ethereum/genesis-nodeX.json`, and provide it initial balance.
-
-> The initial Ether value is provided in **Wei**. 
->
-> 1 Ether = 1 000 000 000 Gwei (10⁹ Gwei) = 1 000 000 000 000 000 000 Wei (10¹⁸ Wei)
-
-Example: we have create the account "0x849fC9517B8B35710357a90C4e2f57522F0D5485" and we want to initialize its balance with 100 Ethers.
-
+Example: we have create 3 accounts and we want to initialize its balance with 100 Ethers.
 ```json
 {
   "config": {
@@ -134,7 +126,9 @@ Example: we have create the account "0x849fC9517B8B35710357a90C4e2f57522F0D5485"
   "difficulty": "1",
   "gasLimit": "8000000",
   "alloc": {
-    "0x849fC9517B8B35710357a90C4e2f57522F0D5485": { "balance": "100000000000000000000" }      
+    "0x0f2496916364956674fA44efE2b35120c326af75": { "balance": "100000000000000000000" },
+    "0x2B6C7ddD92Af855B54d157D41c895bB495d1d90E": { "balance": "100000000000000000000" },
+    "0xE12d22A64F3F7bD8F7340BCD24Cb5666C53688a7": { "balance": "100000000000000000000" }    
   }
 }
 ```
@@ -145,11 +139,11 @@ Example: we have create the account "0x849fC9517B8B35710357a90C4e2f57522F0D5485"
 #!/bin/bash
 
 # Init each node with genesis block file
-geth init ethereum/genesis-node1.json --datadir="ethereum/ethereum-nodes/node1"
+geth init genesis-node1.json --datadir="ethereum/ethereum-nodes/node1"
 
-geth init ethereum/genesis-node2.json --datadir="ethereum/ethereum-nodes/node2"
+geth init genesis-node2.json --datadir="ethereum/ethereum-nodes/node2"
 
-geth init ethereum/genesis-node3.json --datadir="ethereum/ethereum-nodes/node3"
+geth init genesis-node3.json --datadir="ethereum/ethereum-nodes/node3"
 ```
 
 ### d. Start the nodes (`run-nodeX.sh`)

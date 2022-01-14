@@ -1,15 +1,15 @@
-Update ethereum/genesis-nodeX.json with the given Ethereum account address provided by previous step.
+Update ethereum/genesis.json with the given Ethereum accounts address provided by previous step.
 
 1 - Go to ethereum-nodes/nodeX/keystore
 2 - Open the file named "UTC-....."
 3 - Copy the value of 'address' field
-4 - Paste it in 'alloc' section of ethereum/genesis-nodeX.json, and provide it initial balance.
+4 - Paste it in 'alloc' section of genesis.json, and provide it initial balance.
 
 The initial Ether value is provided in Wei. 
 
 1 Ether = 1 000 000 000 Gwei (10⁹ Gwei) = 1 000 000 000 000 000 000 Wei (10¹⁸ Wei)
 
-Example: we have create the account "0x849fC9517B8B35710357a90C4e2f57522F0D5485" and we want to initialize its balance with 100 Ethers.
+Example: we have create 3 accounts and we want to initialize its balance with 100 Ethers.
 
 {
   "config": {
@@ -26,6 +26,8 @@ Example: we have create the account "0x849fC9517B8B35710357a90C4e2f57522F0D5485"
   "difficulty": "1",
   "gasLimit": "8000000",
   "alloc": {
-    "0x849fC9517B8B35710357a90C4e2f57522F0D5485": { "balance": "100000000000000000000" }      
+    "0x0f2496916364956674fA44efE2b35120c326af75": { "balance": "100000000000000000000" },
+    "0x2B6C7ddD92Af855B54d157D41c895bB495d1d90E": { "balance": "100000000000000000000" },
+    "0xE12d22A64F3F7bD8F7340BCD24Cb5666C53688a7": { "balance": "100000000000000000000" }    
   }
 }

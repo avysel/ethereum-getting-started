@@ -23,8 +23,3 @@ geth --datadir="ethereum/ethereum-nodes/node3" account new
 
 # A file will be created in ethereum/ethereum-nodes/nodeX/keystore with account's address.
 # Use this address in genesis.json file to init each node with it's first account ("alloc" field of genesis.json) and provide it initial ethers
-
-# Init genesis file for all nodes
-cp genesis.json ethereum/genesis-node1.json
-cp genesis.json ethereum/genesis-node2.json
-cp genesis.json ethereum/genesis-node3.json

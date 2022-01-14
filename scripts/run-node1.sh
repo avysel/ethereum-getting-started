@@ -12,4 +12,6 @@ geth \
 --http.api personal,eth,net,web3 \
 --nodiscover \
 --http.corsdomain "chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn" \
-#console
+console
+
+
