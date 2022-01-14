@@ -6,5 +6,6 @@ geth \
 --datadir "./ethereum/ethereum-nodes/node2" \
 --networkid 159999 \
 --port 30302 \
---http.port 80802 \
+--http.port 8546 \
+--nodiscover \
 console
