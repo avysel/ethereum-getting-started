@@ -171,7 +171,7 @@ geth \
 --datadir "./ethereum/ethereum-nodes/node1" \
 --networkid 159999 \
 --port 30301 \
---http.port 80801 \
+--http.port 8545 \
 console
 ```
 - `datadir` specifiy the directory of given node's data
@@ -351,7 +351,7 @@ We have the detail of the transaction. If fields `blockHash` and `blockNumber` a
 
 **All nodes on the network should now be able to see this transaction.**
 
-New check the new balances:
+Now check the new balances:
 
 ```javascript
 > web3.fromWei(eth.getBalance("0x5957cf50f748af5ef68bc777af8833ba5ab2a29b"))
