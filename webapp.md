@@ -24,3 +24,26 @@ Actually, when exposing a smart contract, anyone should be able to develop he's 
 ## Tools
 
 - [Web3.js](https://web3js.readthedocs.io/en/v1.5.2/): the most commonly used Javascript framework to deal with smart contracts.
+
+## Sample webapp
+
+See https://github.com/avysel/ethereum-getting-started/tree/main/webapp
+
+This sample webapp provide a very simple example of DApp:
+- How to connect to blockchain
+- How to read data from smart contract
+- How to send transaction to call smart contract function
+
+
+It's developed in plain Javascript to avoid mixing sample code with some framework code.
+
+But Web3.js must be used trough HTTP(S). So, using a Javascript front framework is recommanded.
+
+In this example, we only have `index.js` file that is used to serve `index.html` on localhost:3000.
+
+`blockchain.js` contains all code related to blockchain and smart contract interaction.
+
+`Hello.js` is the smart contract definition, as provided by Truffle avec compiling. It contains the ABI, the interface of smart contract, necessary to use it with Web3.js.
+
+`web3.min.js` is the dist version of `web3` npm package, to be included directly in an HTML page.
+You should use `web3` using `npm install web3` and `require("web3")` in node.js files.
