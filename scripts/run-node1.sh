@@ -5,13 +5,16 @@
 geth \
 --datadir "./ethereum/ethereum-nodes/node1" \
 --networkid 159999 \
---port 30301 \
 --http.port 8545 \
 --http \
 --http.addr localhost \
 --http.api personal,eth,net,web3 \
 --nodiscover \
+--port 30301 \
 --http.corsdomain "chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn" \
+--allow-insecure-unlock \
 console
+
+
 
 

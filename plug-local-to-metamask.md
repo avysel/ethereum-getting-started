@@ -30,4 +30,16 @@ If you want to really use this account, be sure to write down this passphrase on
 
 ## 3. Load accounts in Metamask
 
+Open Metamask, then click on the colored circle on top right.
+
+You have the list of all available accounts.
+
+Bellow this list, click on "Import account".
+
+In **type of account** select **JSON file**. Then select the file of account in node `DATADIR/keystore`, enter the password you typed when you create the account, and confirm.
+
+It'll take several minutes. Browser may prompt you many time to know if you want to wait of abort.
+
+Once imported, this account appears in accounts list with a tag "imported".
+
 ## 4. Use accounts

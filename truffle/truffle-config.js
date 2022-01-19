@@ -5,10 +5,10 @@ const MNEMONIC = 'YOUR WALLET KEY';
 module.exports = {
 
   networks: {
-    localNode1: {
+    node1: {
       host: "127.0.0.1",
       port: 8545,
-      network_id: "*" // Match any network id
+      network_id: "159999" // Match any network id
     },
     /*ropsten: {
       provider: function() {
