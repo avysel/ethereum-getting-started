@@ -165,14 +165,29 @@ geth \
 --datadir "./ethereum/ethereum-nodes/node1" \
 --networkid 159999 \
 --port 30301 \
+--http \
 --http.port 8545 \
+--http.addr localhost \
+--http.corsdomain "chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn" \
+--allow-insecure-unlock \
 console
 ```
+
+Mandatory parameters:
 - `datadir` specifiy the directory of given node's data
 - `networkid` is the id of network to connect to
 - `port` is the running port for Geth process
-- `http.port` is the RPC port, to be used by development tools to communicate with blockchain
+- `http` to activate RPC endpoint
+- `http.port` and `http.addr` is the RPC address:port, to be used by development tools to communicate with blockchain
+
+Optional parameters:
+- `http.corsdomain` to allow Metamask brownser extension to connect to the node (to be updated with ths extensions id in you browser)
+- `allow-insecure-unlock` in production, accounts are locked to avoir security weakness. For test purpose, we can turn off this lock
 - `console` starts a console to manage the node (should always be the last parameter)
+
+> All your nodes must have the same `networkid`
+> At least on of your nodes must have the `http*` parameters to open RPC endpoint. Not mandatory for all nodes.
+> `http.corsdomain` and `allow-insecure-unlock` are usefull only when RPC is open on the node.
 
 All options are described here: https://geth.ethereum.org/docs/interface/command-line-options
 
