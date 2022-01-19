@@ -1,3 +1,5 @@
 scripts/ethereum/
 
 webapp/node_modules/
+
+truffle/node_modules/

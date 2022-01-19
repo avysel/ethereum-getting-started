@@ -63,6 +63,9 @@ module.exports = {
 
 Use `--allow-insecure-unlock` with your Geth command to allow accounts of your local node to be unlocked event when RCP is activated on your node.
 
+To connect to a secured network, use HDWalletProvider:
+https://github.com/trufflesuite/truffle/blob/develop/packages/hdwallet-provider/README.md#instantiation
+
 ###  3. Create a deployment file for you contract (Migration file): 
 
 https://trufflesuite.com/docs/truffle/getting-started/running-migrations.html
