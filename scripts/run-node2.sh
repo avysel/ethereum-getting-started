@@ -5,8 +5,10 @@
 geth \
 --datadir "./ethereum/ethereum-nodes/node2" \
 --networkid 159999 \
---port 30302 \
 --http \
 --http.port 8546 \
+--http.addr localhost \
+--ipcpath geth2.ipc \
+--port 30302 \
 --nodiscover \
 console

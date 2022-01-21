@@ -164,10 +164,13 @@ Here's the command to rune the `node1`. Just change `datadir` and `(http.)port` 
 geth \
 --datadir "./ethereum/ethereum-nodes/node1" \
 --networkid 159999 \
---port 30301 \
 --http \
 --http.port 8545 \
 --http.addr localhost \
+--http.api personal,eth,net,web3 \
+--ipcpath geth.ipc \
+--nodiscover \
+--port 30301 \
 --http.corsdomain "chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn" \
 --allow-insecure-unlock \
 console
@@ -181,17 +184,29 @@ Mandatory parameters:
 - `http.port` and `http.addr` is the RPC address:port, to be used by development tools to communicate with blockchain
 
 Optional parameters:
+- `http.api` to select which set of console api is available
+- `ipcpath` to specify the name of IPC file
+- `nodiscover` to make the node not discoverable by other networks'nodes
 - `http.corsdomain` to allow Metamask brownser extension to connect to the node (to be updated with ths extensions id in you browser)
 - `allow-insecure-unlock` in production, accounts are locked to avoir security weakness. For test purpose, we can turn off this lock
 - `console` starts a console to manage the node (should always be the last parameter)
 
-> All your nodes must have the same `networkid`
+> **Warning 1:** All your nodes must have the same `networkid`
 > At least on of your nodes must have the `http*` parameters to open RPC endpoint. Not mandatory for all nodes.
 > `http.corsdomain` and `allow-insecure-unlock` are usefull only when RPC is open on the node.
+
+> **Warning2:** on Linux of Mac, the `.ipc` file, used to attach console, is created in each node's `datadir`.
+> On Windows, the file is create in an IPC pipe. So each node must set it's own IPC file name using `--ipcpath`. Or disable it's own IPC with `--ipcdisable`. If you don't do this, all nodes are going to use the same IPC name. It's going to abort because if naming conflict.
 
 All options are described here: https://geth.ethereum.org/docs/interface/command-line-options
 
 It is possible to run the node and the console in 2 separate terminals using the `attach` command: https://geth.ethereum.org/docs/interface/javascript-console
+
+
+In the `scripts` example:
+- Node 1 opens IPC on default `geth.ipc`
+- Node 2 opens IPC on parametered `geth2.ipc`
+- Node 3 does not open IPC.
 
 ### e. Check it !
 
