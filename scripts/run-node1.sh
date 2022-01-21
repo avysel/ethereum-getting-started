@@ -14,7 +14,3 @@ geth \
 --http.corsdomain "chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn" \
 --allow-insecure-unlock \
 console
-
-
-
-

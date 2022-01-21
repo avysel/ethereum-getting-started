@@ -6,6 +6,7 @@ geth \
 --datadir "./ethereum/ethereum-nodes/node3" \
 --networkid 159999 \
 --port 30303 \
+--http \
 --http.port 8547 \
 --nodiscover \
 console
