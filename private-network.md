@@ -195,8 +195,8 @@ Optional parameters:
 > At least on of your nodes must have the `http*` parameters to open RPC endpoint. Not mandatory for all nodes.
 > `http.corsdomain` and `allow-insecure-unlock` are usefull only when RPC is open on the node.
 
-> **Warning2:** on Linux of Mac, the `.ipc` file, used to attach console, is created in each node's `datadir`.
-> On Windows, the file is create in an IPC pipe. So each node must set it's own IPC file name using `--ipcpath`. Or disable it's own IPC with `--ipcdisable`. If you don't do this, all nodes are going to use the same IPC name. It's going to abort because if naming conflict.
+> **Warning2:** on Linux or Mac, the `.ipc` file, used to attach console, is created in each node's `datadir`, so there is no naming conflict.
+> On Windows, the files are created in the same IPC pipe. So each node must set it's own IPC file name using `--ipcpath`. Or disable it's own IPC with `--ipcdisable`. If you don't do this, all nodes are going to use the same IPC name. It's going to abort because of naming conflict.
 
 All options are described here: https://geth.ethereum.org/docs/interface/command-line-options
 
